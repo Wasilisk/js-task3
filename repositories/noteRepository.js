@@ -2,9 +2,9 @@ let store = require('../store')
 
 class NoteRepository {
 
-    create(name, category, content, dates, currentDate) {
+    async create(name, category, content, dates, currentDate) {
         let newNote = {
-            id: store.length + 1,
+            id: store.notes.length + 1,
             name,
             created: currentDate,
             category,
@@ -12,17 +12,17 @@ class NoteRepository {
             dates,
             archived: false
         }
-        store.push(newNote)
+        store.notes.push(newNote)
         return newNote
     }
 
-    delete(id) {
-        store = store.filter(note => note.id != id)
+    async delete(id) {
+        store.notes = store.notes.filter(note => note.id != id)
     }
 
-    update(id, noteValues) {
+    async update(id, noteValues) {
         let editNote;
-        store = store.map(note => {
+        store.notes = store.notes.map(note => {
             if(note.id == id) {
                 note.name = noteValues.name;
                 note.category = noteValues.category;
@@ -30,9 +30,18 @@ class NoteRepository {
                 note.dates = noteValues.dates;
                 editNote = note;
             }
+            return note;
         })
 
         return editNote;
+    }
+
+    async getOne(id) {
+        return store.notes.filter(note => note.id == id)[0];
+    }
+
+    async getAll() {
+        return store.notes;
     }
 
 }

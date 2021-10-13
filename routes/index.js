@@ -6,10 +6,10 @@ const noteSchema = require('../validations/noteValidation')
 
 router.post('/notes', validation(noteSchema), NoteController.create)
 router.delete('/notes/:id', NoteController.delete)
-router.patch('/notes/:id', NoteController.update)
+router.patch('/notes/:id', validation(noteSchema), NoteController.update)
+router.get('/notes/stats', NoteController.getStats)
 router.get('/notes/:id', NoteController.getOne)
 router.get('/notes', NoteController.getAll)
-router.get('/notes/stats', NoteController.getStats)
 
 module.exports = router
 
