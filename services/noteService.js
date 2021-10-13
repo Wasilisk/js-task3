@@ -1,14 +1,18 @@
+const dateFormat = require("../helpers/dateFormat");
+const NoteRepository = require("../repositories/noteRepository")
+
 class NoteService {
-    async create(noteValues) {
-
+    async create(name, category, content, dates) {
+        const currentDate = dateFormat();
+        return NoteRepository.create(name, category, content, dates, currentDate)
     }
 
-    async delete(noteId) {
-
+    async delete(id) {
+        NoteRepository.delete(id)
     }
 
-    async update(noteValues) {
-
+    async update(id, noteValues) {
+        return NoteRepository.update(id, noteValues)
     }
 
     async getOne(noteId) {
@@ -23,3 +27,5 @@ class NoteService {
 
     }
 }
+
+module.exports = new NoteService();
